@@ -13,16 +13,15 @@ validacao_bp = Blueprint('validacao', __name__)
 
 # Configuração do banco de dados Oracle
 DATABASE_CONFIG = {
-    'user': os.getenv('ORACLE_USER', 'consulta'),
-    'password': os.getenv('ORACLE_PASSWORD', 'consulta'),
-    'dsn': os.getenv('ORACLE_DSN', '128.0.0.233:1521/csorcl')
+    'user': os.getenv('ORACLE_USER', ''),
+    'password': os.getenv('ORACLE_PASSWORD', ''),
+    'dsn': os.getenv('ORACLE_DSN', 'localhost:1521/XE')
 }
 
 def get_oracle_connection():
     """Importa e conecta ao Oracle apenas quando necessário"""
     try:
         import oracledb
-        oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_23_8")
         return oracledb.connect(
             user=DATABASE_CONFIG['user'],
             password=DATABASE_CONFIG['password'],
@@ -50,9 +49,9 @@ def set_config():
     if not data:
         return jsonify({'error': 'Dados não fornecidos'}), 400
     
-    DATABASE_CONFIG['user'] = data.get('user', 'consulta')
-    DATABASE_CONFIG['password'] = data.get('password', 'consulta')
-    DATABASE_CONFIG['dsn'] = data.get('dsn', '128.0.0.233:1521/csorcl')
+    DATABASE_CONFIG['user'] = data.get('user', '')
+    DATABASE_CONFIG['password'] = data.get('password', '')
+    DATABASE_CONFIG['dsn'] = data.get('dsn', 'localhost:1521/XE')
     
     return jsonify({'message': 'Configuração atualizada com sucesso'})
 

@@ -22,7 +22,7 @@ def get_oracle_connection():
     """Importa e conecta ao Oracle apenas quando necessário"""
     try:
         import oracledb
-        oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_23_8")
+        oracledb.init_oracle_client()
         return oracledb.connect(
             user=DATABASE_CONFIG['user'],
             password=DATABASE_CONFIG['password'],
